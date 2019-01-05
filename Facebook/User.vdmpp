@@ -11,7 +11,7 @@ class User
 	-- TODO Define values here
 
 	instance variables
-		public name : String;
+		public name: String;
 		public sex: Sex;
 		public birthDate: Date;
 		public friendsList: set of User;
@@ -26,7 +26,6 @@ class User
 		public User: String ==> User
 		User(userName) == (
 			name := userName;
-			
 			
 			id := userId;
 			userId := userId + 1;
@@ -85,6 +84,14 @@ class User
 	-- Returns user birth date
 	public pure GetBirthDate : () ==> Date
 	GetBirthDate() == return birthDate;
+	
+	-- Returns list of friends of the User
+	public pure GetFriendsList : () ==> set of User
+	GetFriendsList() == return friendsList;
+	
+	-- Returns id of the User
+	public pure GetUserId : () ==> nat
+	GetUserId() == return id;
 	
 	
 

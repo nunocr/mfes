@@ -1,0 +1,106 @@
+class Post
+
+	types
+		public String = seq of char;
+		public Date::day : nat
+								 month : nat
+						     year : nat;		
+		
+		
+	values
+	-- TODO Define values here
+
+	instance variables
+		
+		private text: String;
+		private date: Date;
+		private author: User;
+		private viewers: set of User;
+		
+		public static postId : int := 0;
+		public id : int := postId;
+		
+	operations
+	
+	-- Post Constructor
+		public Post: String * User * nat * nat * nat * set of User ==> Post
+		Post(postText, postAuthor, postDay, postMonth, postYear, postViewers) == (
+			text := postText;
+			author := postAuthor;
+			date.day := postDay;
+			date.month := postMonth;
+			date.year := postYear;
+			viewers := postViewers;
+			
+			id := postId;
+			postId := postId + 1;
+			return self
+		);
+	
+	
+	-- Post Constructor
+		public Post: String * User * nat * nat * nat ==> Post
+		Post(postText, postAuthor, postDay, postMonth, postYear) == (
+			text := postText;
+			author := postAuthor;
+			date.day := postDay;
+			date.month := postMonth;
+			date.year := postYear;
+			
+			id := postId;
+			postId := postId + 1;
+			return self
+		);
+		
+	-- Post Constructor
+		public Post: String * User ==> Post
+		Post(postText, postAuthor) == (
+			text := postText;
+			author := postAuthor;
+			
+			id := postId;
+			postId := postId + 1;
+			return self
+		);
+		
+	-- Post Constructor
+		public Post: String  ==> Post
+		Post(postText) == (
+			text := postText;
+			
+			id := postId;
+			postId := postId + 1;
+			return self
+		);
+
+
+		
+	-- Returns Post Content
+	public pure GetText : () ==> String
+	GetText() == return text;
+	
+	-- Returns Date
+	public pure GetDate : () ==> Date
+	GetDate() == return date;
+	
+	-- Returns List of Users who can view the Post
+	public pure GetViewers : () ==> set of User
+	GetViewers() == return viewers;
+	
+	-- Returns the Author of the Post
+	public pure GetAuthor : () ==> User
+	GetAuthor() == return author;
+	
+	-- Returns id of the post
+	public pure GetPostId : () ==> nat
+	GetPostId() == return id;
+	
+	
+
+	functions
+	-- TODO Define functiones here
+
+	traces
+	-- TODO Define Combinatorial Test Traces here
+
+end Post
