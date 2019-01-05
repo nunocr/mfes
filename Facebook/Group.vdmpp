@@ -1,0 +1,35 @@
+class Group
+
+types
+	public feed = set of Post;
+	
+values
+
+-- TODO Define values here
+instance variables
+
+	public users: set of User := {};
+	public posts: seq of Post := [];
+
+operations
+
+	public addUser: User ==> ()
+	addUser(user) == users .= users union {user}
+	--pre and post condition, should we even have these here?
+	pre user not in set users
+	post users = users~ union {user};
+
+	public removeUser: User ==> ()
+	removeUser(user) == users := users \ {user};
+	
+	publishPost: User * Post ==> ()
+	publishPost(user,message) == posts .= posts ^ [message];      --message = post (can i use it?) also is "^" right?
+	
+	
+functions
+-- TODO Define functiones here
+
+traces
+-- TODO Define Combinatorial Test Traces here
+
+end Group
