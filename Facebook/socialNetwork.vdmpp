@@ -1,0 +1,37 @@
+class SocialNetwork
+
+types
+-- TODO Define types here
+
+values
+	public CHUNGUS:nat = 9999999
+	
+instance variables
+
+public users: set of User .= {};
+
+-- not sure how to do here - public groups: map seq"1" of char to Group := "{|->}";
+
+-- invariant to establish friendship both ways
+	inv forall user1 in set users &
+				forall user2 in set user1.friendsList &
+					user1 in set user2.friendsList;
+					
+					
+					
+					
+					
+					
+operations
+
+
+
+
+
+functions
+-- TODO Define functiones here
+
+traces
+-- TODO Define Combinatorial Test Traces here
+
+end SocialNetwork

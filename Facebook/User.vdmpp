@@ -15,6 +15,7 @@ class User
 		public sex: Sex;
 		public birthDate: Date;
 		public friendsList: set of User;
+		public groupList: set of Group;
 		
 		public postsList: seq of Post;
 		
