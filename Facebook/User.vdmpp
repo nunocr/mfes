@@ -16,6 +16,8 @@ class User
 		public birthDate: Date;
 		public friendsList: set of User;
 		
+		public postsList: seq of Post;
+		
 		public static userId : int := 0;
 		public id : int := userId;
 		
@@ -92,6 +94,35 @@ class User
 	-- Returns id of the User
 	public pure GetUserId : () ==> nat
 	GetUserId() == return id;
+	
+	
+	
+	-- Set User Name
+	public SetName : String ==> ()
+	SetName(newName) == name := newName;
+	
+	-- Adds a Friend to the friends list of the User
+	public AddFriend : User ==> ()
+	AddFriend(friend) == 
+	friendsList := {friend} union friendsList
+	pre friend not in set friendsList
+	post friendsList = {friend} union friendsList~;
+	
+	-- Removes a Friend from the friends list of the User
+	public RemoveFriend : User ==> ()
+	RemoveFriend(friend) ==
+	friendsList := friendsList \ {friend}
+	pre friend in set friendsList
+	post friendsList = friendsList~ \ {friend};
+	
+	
+	-- Creates a Post and adds it to the posts list of the User
+	public MakePost : String * Date * set of User ==> ()
+	MakePost(postText, postDate, postViewers) ==
+	postsList := postsList ^ [new Post(postText, self, postDate.day, postDate.month, postDate.year, postViewers)];  
+	
+
+
 	
 	
 
