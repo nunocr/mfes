@@ -92,7 +92,15 @@ operations
 	newPost.getAuthor().addPost(newPost);
 	for all currUser in set newPost.getViewers() do
 		currUser.addPost(newPost);
-	)
+	);
+	
+
+	-- Makes a message and adds it to the mailbox of target
+	public sendMessage: Message ==> ()
+	sendMessage(newMessage) ==
+	(
+		newMessage.target.addMessage(newMessage)
+		);
 	
 
 

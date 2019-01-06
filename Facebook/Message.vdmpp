@@ -1,0 +1,63 @@
+class Message
+
+	types
+		public String = seq of char;
+		public Date::day : nat
+								 month : nat
+						     year : nat;		
+		
+		
+	values
+	-- TODO Define values here
+
+	instance variables
+		
+		public text: String;
+		public author: User;
+		public target: User;
+		
+		public static messageID : int := 0;
+		public ID : int := messageID;
+		
+	operations
+		
+	-- Post Constructor
+		public Message: String * User * User ==> Message
+		Message(messageText, messageAuthor, messageTarget) == (
+			text := messageText;
+			author := messageAuthor;
+			target := messageTarget;
+			
+			ID := messageID;
+			messageID := messageID + 1;
+			return self
+		);
+		
+
+	-- Returns Post Content
+	public pure getText : () ==> String
+	getText() == return text;
+	
+	
+	-- Returns List of Users who can view the Post
+	public pure getTarget : () ==> User
+	getTarget() == return target;
+	
+	-- Returns the Author of the Post
+	public pure getAuthor : () ==> User
+	getAuthor() == return author;
+	
+	-- Returns ID of the post
+	public pure getPostID : () ==> nat
+	getPostID() == return ID;
+	
+	
+
+
+	functions
+	-- TODO Define functiones here
+
+	traces
+	-- TODO Define Combinatorial Test Traces here
+
+end Message
