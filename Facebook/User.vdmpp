@@ -14,9 +14,9 @@ class User
 		public name: String;
 		public sex: Sex;
 		public birthDate: Date;
-		public friendsList: set of User;
+		public friendsList: set of User := {};
 		
-		public postsList: seq of Post;
+		public feed: seq of Post := [];
 		
 		public static userId : int := 0;
 		public id : int := userId;
@@ -74,28 +74,34 @@ class User
 			return self
 		);
 		
+
 	
+	-- get's
 		
 		
 	-- Returns user name
-	public pure GetName : () ==> String
-	GetName() == return name;
+	public pure getName : () ==> String
+	getName() == return name;
 	
 	-- Returns user sex
-	public pure GetSex : () ==> Sex
-	GetSex() == return sex;
+	public pure getSex : () ==> Sex
+	getSex() == return sex;
 	
 	-- Returns user birth date
-	public pure GetBirthDate : () ==> Date
-	GetBirthDate() == return birthDate;
+	public pure getBirthDate : () ==> Date
+	getBirthDate() == return birthDate;
 	
 	-- Returns list of friends of the User
-	public pure GetFriendsList : () ==> set of User
-	GetFriendsList() == return friendsList;
+	public pure getFriendsList : () ==> set of User
+	getFriendsList() == return friendsList;
 	
 	-- Returns id of the User
-	public pure GetUserId : () ==> nat
-	GetUserId() == return id;
+	public pure getUserId : () ==> nat
+	getUserId() == return id;
+	
+	-- Returns feed of posts of the user
+	public pure getFeed : () ==> seq of Post
+	getFeed() == return feed;
 	
 	
 	
@@ -104,11 +110,23 @@ class User
 	SetName(newName) == name := newName;
 	
 	-- Adds a Friend to the friends list of the User
+	
+	public addFriend: User ==> ()
+	addFriend(friend) == friendsList := friendsList union {friend}
+	pre friend <> self and friend not in set friendsList
+	post friendsList = friendsList~ union {friend};
+	
+	
+	
+	
+	
+	
+	/*
 	public AddFriend : User ==> ()
-	AddFriend(friend) == 
-	friendsList := {friend} union friendsList
-	pre friend not in set friendsList
-	post friendsList = {friend} union friendsList~;
+	AddFriend(friend) == friendsList := friendsList union {friend}
+	pre friend <> self and friend not in set friendsList
+	post friendsList = friendsList~ union {friend};
+	*/
 	
 	-- Removes a Friend from the friends list of the User
 	public RemoveFriend : User ==> ()
@@ -120,8 +138,14 @@ class User
 	
 	-- Creates a Post and adds it to the posts list of the User
 	public MakePost : String * Date * set of User ==> ()
-	MakePost(postText, postDate, postViewers) ==
-	postsList := postsList ^ [new Post(postText, self, postDate.day, postDate.month, postDate.year, postViewers)];  
+	MakePost(postText, postDate, postViewers) == (
+	feed := feed ^ [new Post(postText, self, postDate.day, postDate.month, postDate.year, postViewers)];  
+	);
+	
+	-- Adds post to feed of user
+	public addPost : Post ==> ()
+	addPost(newPost) == 
+	feed := feed ^ [newPost];
 	
 
 

@@ -1,0 +1,106 @@
+class SocialNetwork
+
+types
+
+	public String = seq of char;
+	
+instance variables
+
+	public static socialNetwork: SocialNetwork := new SocialNetwork();
+	
+	public users: set of User := {};
+	
+	-- User(userName, userDay, userMonth, userYear, userSex)
+	
+	db_user1 : User := new User("Vasco", <Male>);
+	db_user2 : User := new User("Anao", <Female>);
+	db_user3 : User := new User("Cuco", <Other>);
+	
+	
+	inv forall user1 in set users &
+				forall user2 in set user1.friendsList &
+					user1 in set user2.friendsList;
+		
+operations
+	
+	public SocialNetwork: () ==> SocialNetwork
+	SocialNetwork() == return self
+	post users = {};
+	
+	-- singleton - return the existent instance
+	public pure static getInstance: () ==> SocialNetwork
+	getInstance() == return socialNetwork;
+	
+	-- singleton - reset the instance
+	public static clearInstance: () ==> SocialNetwork
+	clearInstance() == (
+		socialNetwork := new SocialNetwork();
+		return getInstance();
+	)
+	post RESULT.users = {};
+	
+	-- Adds a new User to the Social Network
+	public addUser: User ==> ()
+	addUser(user) == (
+	users := users union {user};
+	IO`println("User successfully added!");
+	)
+	pre user not in set users
+	post users = users~ union {user};
+	
+	--addFriend on main function
+	public addFriend: User * User ==> ()
+	addFriend(user1, user2) == (
+		dcl user1_temp: User := user1;
+		dcl user2_temp: User := user2;
+		atomic (
+			user1_temp.friendsList := user1.friendsList union {user2};
+			user2_temp.friendsList := user2.friendsList union {user1}
+		);
+	)
+	pre
+			-- they are not the same user
+			user1 <> user2 and
+			-- both users exist in the database
+			user1 in set users and
+			user2 in set users and
+			-- there's no connection between them
+			user2 not in set user1.friendsList and
+			user1 not in set user2.friendsList
+	post user2 in set user1.friendsList and
+			user1 in set user2.friendsList;
+	
+	
+	
+	
+-- Gets all the usernames currently registered in the Social Network
+	public getUsersNames: () ==> seq of seq of char
+	getUsersNames() == (
+		dcl names: seq of seq of char := [];
+		
+		for all user in set users do
+			names := names ^ [user.name];
+
+		return names
+	);
+	
+	-- Makes a post and adds it to all the users in the group of the author
+	public makePost: User * Post * set of User ==> ()
+	makePost(author, newPost, group) == 
+	(
+	author.addPost(newPost);
+	for all currUser in set group do
+		currUser.addPost(newPost);
+	)
+
+-- 
+
+functions
+
+traces
+	
+	
+	
+	
+	
+end SocialNetwork
