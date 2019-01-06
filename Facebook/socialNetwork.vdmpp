@@ -74,12 +74,12 @@ operations
 	
 	
 -- Gets all the usernames currently registered in the Social Network
-	public getUsersNames: () ==> seq of seq of char
+	public getUsersNames: () ==> set of seq of char
 	getUsersNames() == (
-		dcl names: seq of seq of char := [];
+		dcl names: set of seq of char := {};
 		
 		for all user in set users do
-			names := names ^ [user.name];
+			names := names union {user.name};
 
 		return names
 	);
@@ -93,6 +93,8 @@ operations
 	for all currUser in set newPost.getViewers() do
 		currUser.addPost(newPost);
 	)
+	
+
 
 functions
 

@@ -74,6 +74,13 @@ public removeUser: User ==> ()
 	pre user in set viewers and
 			card viewers > 1
 	post viewers = viewers~ \ {user};
+	
+	
+-- Sets the Author of a Post
+public setAuthor: User ==> ()
+setAuthor(user) ==
+author := user;
+
 
 	
 	

@@ -18,6 +18,8 @@ class User
 		public groupsList: set of Group := {};
 		
 		public feed: seq of Post := [];
+		public messages: seq of Message := [];
+		
 		
 		public static userID : int := 0;
 		public ID : int := userID;
@@ -104,7 +106,9 @@ class User
 	public pure getFeed : () ==> seq of Post
 	getFeed() == return feed;
 	
-	
+	-- Returns messagess of the user
+	public pure getMessages : () ==> seq of Message
+	getMessages() == return messages;
 	
 	-- Set User Name
 	public SetName : String ==> ()
@@ -148,11 +152,13 @@ class User
 	addPost(newPost) == 
 	feed := feed ^ [newPost];
 	
-
+	-- Adds message to messages of user
+	public addMessage : Message ==> ()
+	addMessage(message) == 
+	messages := messages ^ [message];
 
 	
 	
-
 	functions
 	-- TODO Define functiones here
 
