@@ -1,30 +1,51 @@
 class Group
 
 types
-	public feed = set of Post;
+	public String = seq of char;
 	
 values
-
--- TODO Define values here
 instance variables
 
-	public users: set of User := {};
-	public posts: seq of Post := [];
+	public name: String;
+	public usersList: set of User := {};
 
 operations
 
-	public addUser: User ==> ()
-	addUser(user) == users .= users union {user}
-	--pre and post condition, should we even have these here?
-	pre user not in set users
-	post users = users~ union {user};
+-- Group Constructor just name
 
-	public removeUser: User ==> ()
-	removeUser(user) == users := users \ {user};
+	public Group: String ==> Group
+	Group(groupName) == (
+		name := groupName;
+		usersList := {};
+		return self
+	);
+
+-- Group Constructor name + list
+
+public Group: String * set of User ==> Group
+	Group(groupName, users) == (
+		name := groupName;
+		usersList := users;
+		return self
+	);
+
+
+
+public addUser: User ==> ()
+	addUser(user) == usersList := usersList union {user}
 	
-	publishPost: User * Post ==> ()
-	publishPost(user,message) == posts .= posts ^ [message];      --message = post (can i use it?) also is "^" right?
-	
+	pre user not in set usersList
+	post usersList = usersList~ union {user};
+
+
+
+public removeUser: User ==> ()
+	removeUser(user) == usersList := usersList \ {user}
+	pre user in set usersList and
+			card usersList > 1
+	post usersList = usersList~ \ {user};
+
+
 	
 functions
 -- TODO Define functiones here

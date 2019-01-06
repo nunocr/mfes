@@ -15,15 +15,15 @@ class Post
 		private text: String;
 		private date: Date;
 		private author: User;
-		private viewers: set of User := {};
+		private viewers: Group;
 		
-		public static postId : int := 0;
-		public id : int := postId;
+		public static postID : int := 0;
+		public ID : int := postID;
 		
 	operations
 	
 	-- Post Constructor
-		public Post: String * User * nat * nat * nat * set of User ==> Post
+		public Post: String * User * nat * nat * nat * Group ==> Post
 		Post(postText, postAuthor, postDay, postMonth, postYear, postViewers) == (
 			text := postText;
 			author := postAuthor;
@@ -32,8 +32,8 @@ class Post
 			date.year := postYear;
 			viewers := postViewers;
 			
-			id := postId;
-			postId := postId + 1;
+			ID := postID;
+			postID := postID + 1;
 			return self
 		);
 	
@@ -47,8 +47,8 @@ class Post
 			date.month := postMonth;
 			date.year := postYear;
 			
-			id := postId;
-			postId := postId + 1;
+			ID := postID;
+			postID := postID + 1;
 			return self
 		);
 		
@@ -58,8 +58,8 @@ class Post
 			text := postText;
 			author := postAuthor;
 			
-			id := postId;
-			postId := postId + 1;
+			ID := postID;
+			postID := postID + 1;
 			return self
 		);
 		
@@ -68,8 +68,8 @@ class Post
 		Post(postText) == (
 			text := postText;
 			
-			id := postId;
-			postId := postId + 1;
+			ID := postID;
+			postID := postID + 1;
 			return self
 		);
 
@@ -84,16 +84,16 @@ class Post
 	GetDate() == return date;
 	
 	-- Returns List of Users who can view the Post
-	public pure GetViewers : () ==> set of User
+	public pure GetViewers : () ==> Group
 	GetViewers() == return viewers;
 	
 	-- Returns the Author of the Post
 	public pure GetAuthor : () ==> User
 	GetAuthor() == return author;
 	
-	-- Returns id of the post
-	public pure GetPostId : () ==> nat
-	GetPostId() == return id;
+	-- Returns ID of the post
+	public pure GetPostID : () ==> nat
+	GetPostID() == return ID;
 	
 	
 

@@ -15,11 +15,12 @@ class User
 		public sex: Sex;
 		public birthDate: Date;
 		public friendsList: set of User := {};
+		public groupsList: set of Group := {};
 		
 		public feed: seq of Post := [];
 		
-		public static userId : int := 0;
-		public id : int := userId;
+		public static userID : int := 0;
+		public ID : int := userID;
 
 	operations
 	-- User Constructor
@@ -28,8 +29,8 @@ class User
 			name := userName;
 			friendsList := {};
 			
-			id := userId;
-			userId := userId + 1;
+			ID := userID;
+			userID := userID + 1;
 			return self
 		);
 		
@@ -42,8 +43,8 @@ class User
 			birthDate.year := userYear;
 			friendsList  := {};
 			
-			id := userId;
-			userId := userId + 1;
+			ID := userID;
+			userID := userID + 1;
 			return self
 		);
 		
@@ -54,8 +55,8 @@ class User
 			sex := userSex;
 			friendsList := {};
 			
-			id := userId;
-			userId := userId + 1;
+			ID := userID;
+			userID := userID + 1;
 			return self
 		);
 		
@@ -69,8 +70,8 @@ class User
 			sex := userSex;
 			friendsList := {};
 			
-			id := userId;
-			userId := userId + 1;
+			ID := userID;
+			userID := userID + 1;
 			return self
 		);
 		
@@ -95,9 +96,9 @@ class User
 	public pure getFriendsList : () ==> set of User
 	getFriendsList() == return friendsList;
 	
-	-- Returns id of the User
-	public pure getUserId : () ==> nat
-	getUserId() == return id;
+	-- Returns ID of the User
+	public pure getUserID : () ==> nat
+	getUserID() == return ID;
 	
 	-- Returns feed of posts of the user
 	public pure getFeed : () ==> seq of Post
@@ -118,7 +119,7 @@ class User
 	
 	
 	
-	
+	-- adds a group
 	
 	
 	/*
@@ -137,9 +138,9 @@ class User
 	
 	
 	-- Creates a Post and adds it to the posts list of the User
-	public MakePost : String * Date * set of User ==> ()
-	MakePost(postText, postDate, postViewers) == (
-	feed := feed ^ [new Post(postText, self, postDate.day, postDate.month, postDate.year, postViewers)];  
+	public MakePost : String * Date * Group ==> () -- make a test where this group must be from this user
+	MakePost(postText, postDate, group) == (
+	feed := feed ^ [new Post(postText, self, postDate.day, postDate.month, postDate.year, group)];  -- what is self doing there? also date division is killing us?
 	);
 	
 	-- Adds post to feed of user
