@@ -60,7 +60,7 @@ class User
 			return self
 		);
 		
-				-- User Constructor
+		-- User Constructor
 		public User: String * nat * nat * nat * Sex ==> User
 		User(userName, userDay, userMonth, userYear, userSex) == (
 			name := userName;
@@ -137,11 +137,11 @@ class User
 	post friendsList = friendsList~ \ {friend};
 	
 	
-	-- Creates a Post and adds it to the posts list of the User
-	public MakePost : String * Date * Group ==> () -- make a test where this group must be from this user
-	MakePost(postText, postDate, group) == (
-	feed := feed ^ [new Post(postText, self, postDate.day, postDate.month, postDate.year, group)];  -- what is self doing there? also date division is killing us?
-	);
+--	-- Creates a Post and adds it to the posts list of the User
+--	public MakePost : String * Date * set of User ==> () -- make a test where this group must be from this user
+--	MakePost(postText, postDate, group) == (
+--	feed := feed ^ [new Post(postText, self, postDate.day, postDate.month, postDate.year, group)];  -- what is self doing there? also date division is killing us?
+--	);
 	
 	-- Adds post to feed of user
 	public addPost : Post ==> ()

@@ -12,45 +12,14 @@ class Post
 
 	instance variables
 		
-		private text: String;
-		private date: Date;
-		private author: User;
-		private viewers: Group;
+		public text: String;
+		public author: User;
+		public viewers: set of User := {};
 		
 		public static postID : int := 0;
 		public ID : int := postID;
 		
 	operations
-	
-	-- Post Constructor
-		public Post: String * User * nat * nat * nat * Group ==> Post
-		Post(postText, postAuthor, postDay, postMonth, postYear, postViewers) == (
-			text := postText;
-			author := postAuthor;
-			date.day := postDay;
-			date.month := postMonth;
-			date.year := postYear;
-			viewers := postViewers;
-			
-			ID := postID;
-			postID := postID + 1;
-			return self
-		);
-	
-	
-	-- Post Constructor
-		public Post: String * User * nat * nat * nat ==> Post
-		Post(postText, postAuthor, postDay, postMonth, postYear) == (
-			text := postText;
-			author := postAuthor;
-			date.day := postDay;
-			date.month := postMonth;
-			date.year := postYear;
-			
-			ID := postID;
-			postID := postID + 1;
-			return self
-		);
 		
 	-- Post Constructor
 		public Post: String * User ==> Post
@@ -76,26 +45,40 @@ class Post
 
 		
 	-- Returns Post Content
-	public pure GetText : () ==> String
-	GetText() == return text;
+	public pure getText : () ==> String
+	getText() == return text;
 	
-	-- Returns Date
-	public pure GetDate : () ==> Date
-	GetDate() == return date;
 	
 	-- Returns List of Users who can view the Post
-	public pure GetViewers : () ==> Group
-	GetViewers() == return viewers;
+	public pure getViewers : () ==> set of User
+	getViewers() == return viewers;
 	
 	-- Returns the Author of the Post
-	public pure GetAuthor : () ==> User
-	GetAuthor() == return author;
+	public pure getAuthor : () ==> User
+	getAuthor() == return author;
 	
 	-- Returns ID of the post
-	public pure GetPostID : () ==> nat
-	GetPostID() == return ID;
+	public pure getPostID : () ==> nat
+	getPostID() == return ID;
 	
 	
+	-- Adds User to the group of users that will receive the Post on their feed
+	public addUser: User ==> ()
+	addUser(user) == viewers := viewers union {user}	
+	pre user not in set viewers
+	post viewers = viewers~ union {user};
+
+ --Removes User from the group of users that will receive the Post on their feed 
+public removeUser: User ==> ()
+	removeUser(user) == viewers := viewers \ {user}
+	pre user in set viewers and
+			card viewers > 1
+	post viewers = viewers~ \ {user};
+
+	
+	
+	
+
 
 	functions
 	-- TODO Define functiones here
