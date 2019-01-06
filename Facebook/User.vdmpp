@@ -15,20 +15,18 @@ class User
 		public sex: Sex;
 		public birthDate: Date;
 		public friendsList: set of User;
-		public groupList: set of Group;
 		
 		public postsList: seq of Post;
 		
 		public static userId : int := 0;
 		public id : int := userId;
-		
-
 
 	operations
 	-- User Constructor
 		public User: String ==> User
 		User(userName) == (
 			name := userName;
+			friendsList := {};
 			
 			id := userId;
 			userId := userId + 1;
@@ -42,6 +40,7 @@ class User
 			birthDate.day := userDay;
 			birthDate.month := userMonth;
 			birthDate.year := userYear;
+			friendsList  := {};
 			
 			id := userId;
 			userId := userId + 1;
@@ -53,6 +52,7 @@ class User
 		User(userName, userSex) == (
 			name := userName;
 			sex := userSex;
+			friendsList := {};
 			
 			id := userId;
 			userId := userId + 1;
@@ -67,6 +67,7 @@ class User
 			birthDate.month := userMonth;
 			birthDate.year := userYear;
 			sex := userSex;
+			friendsList := {};
 			
 			id := userId;
 			userId := userId + 1;
