@@ -1,37 +1,71 @@
 class SocialNetwork
 
 types
--- TODO Define types here
 
-values
-	public CHUNGUS:nat = 9999999
+	public String = seq of char;
 	
 instance variables
 
-public users: set of User .= {};
-
--- not sure how to do here - public groups: map seq"1" of char to Group := "{|->}";
-
--- invariant to establish friendship both ways
+	public static socialNetwork: SocialNetwork := new SocialNetwork();
+	
+	public users: set of User := {};
+	
+	db_user1 : User := new User("Vasco");
+	db_user2 : User := new User("Anao");
+	db_user3 : User := new User("Cuco");
+	
+	
 	inv forall user1 in set users &
 				forall user2 in set user1.friendsList &
 					user1 in set user2.friendsList;
-					
-					
-					
-					
-					
-					
+		
+		
 operations
+	
+	public SocialNetwork: () ==> SocialNetwork
+	SocialNetwork() == return self
+	post users = {};
+	
+	-- singleton - return the existent instance
+	public pure static getInstance: () ==> SocialNetwork
+	getInstance() == return socialNetwork;
+	
+	-- singleton - reset the instance
+	public static clearInstance: () ==> SocialNetwork
+	clearInstance() == (
+		socialNetwork := new SocialNetwork();
+		return getInstance();
+	)
+	post RESULT.users = {};
+	
+	-- Adds a new User to the Social Network
+	public addUser: User ==> ()
+	addUser(user) == (
+	users := users union {user};
+	IO`println("User successfully added!");
+	)
+	pre user not in set users
+	post users = users~ union {user};
+	
+-- Gets all the usernames currently registered in the Social NEtwork
+	public getUsersNames: () ==> seq of seq of char
+	getUsersNames() == (
+		dcl names: seq of seq of char := [];
+		
+		for all user in set users do
+			names := names ^ [user.name];
 
-
+		return names
+	);
 
 
 
 functions
--- TODO Define functiones here
 
 traces
--- TODO Define Combinatorial Test Traces here
-
+	
+	
+	
+	
+	
 end SocialNetwork
